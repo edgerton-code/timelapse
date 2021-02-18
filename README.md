@@ -23,7 +23,7 @@ Sony Camera API.
 Currently using python 3.7.3
 
 ## Usage
-
+```
 python timelapse.py [-h] [--fps FPS] interval [duration]
 
 Camera control program for creating time lapse photos.
@@ -38,3 +38,4 @@ optional arguments:
 
 The number of photos to take will be the frames per second times the duration
 in seconds. For example: 24 FPS for 20 seconds will take 240 photos.
+```
