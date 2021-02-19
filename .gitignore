@@ -1,0 +1,8 @@
+
+# ignore the libsonyapi external library
+libsonyapi/
+
+# byte-compiled / optimized / DLL files
+__pycache__/
+
+
