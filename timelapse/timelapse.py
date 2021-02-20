@@ -11,6 +11,8 @@
 #	 fps default to 24 frames per second
 
 import tlargs
+from libsonyapi.camera import Camera
+from libsonyapi.actions import Actions
 
 # Initial test of argument handling
 
@@ -21,6 +23,13 @@ print(vars(tl_args))
 
 if tl_args.check_camera:
 	print("Got check_camera")
+	camera = Camera()  # create camera instance
+	camera_info = camera.info()  # get camera camera_info
+	print("Camera info: {}".format(camera_info))
+
+	print("Camera name: {}".format(camera.name))  # print name of camera
+	print("API version: {}".format(camera.api_version))  # print api version of camera
+
 elif tl_args.shoot:
 	print("FPS = {}".format(tl_args.fps))
 	print("Duration = {}".format(tl_args.duration))

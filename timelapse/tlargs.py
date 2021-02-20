@@ -8,8 +8,30 @@ class TimelapseArgs(object):
 
 	# subclass to handle parsing and validating interval values
 	
-	class IntervalAction(argparse.Action):
+	class _HelpAction(argparse._HelpAction):
+			
+		def __call__(self, parser, namespace, values, option_string=None):
+			parser.print_help()
+			print()
+				
+			# retrieve subparsers from parser
+			subparsers_actions = [
+				action for action in parser._actions
+				if isinstance(action, argparse._SubParsersAction)]
+			# the will probably only be one subparser_action,
+			# but better safe than sorry
+			for subparsers_action in subparsers_actions:
+				# get all subparsers and print help
+				for choice, subparser in subparsers_action.choices.items():
+					print("Subcommand: {}".format(choice))
+					print(subparser.format_help())
+				
+			parser.exit()
 
+
+
+	class IntervalAction(argparse.Action):
+		
 		time_regex = "^(?:(?:(\d{1,2}):)?(\d{1,2}):)?(\d{1,2})$"
 		seconds_regex = "^(\d+)$"
 	
@@ -65,11 +87,14 @@ class TimelapseArgs(object):
 		self.shoot = False
 	
 		self.parser = argparse.ArgumentParser(
+			add_help = False,
 			description = "Camera control program for creating time lapse photos.",
 			epilog= "The number of photos to take will be the frames per second"+
 					" times the duration in seconds."+
 					" For example: 24 FPS for 20 seconds will take 240 photos."
 		)
+		
+		self.parser.add_argument('--help', action=self._HelpAction, help="help for help")
 
 		subparsers = self.parser.add_subparsers()
 		parser_shoot = subparsers.add_parser('shoot', help="Start shooting sequence.  Use %(prog)s shoot --help to see valid arguments.")

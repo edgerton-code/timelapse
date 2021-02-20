@@ -39,3 +39,26 @@ optional arguments:
 The number of photos to take will be the frames per second times the duration
 in seconds. For example: 24 FPS for 20 seconds will take 240 photos.
 ```
+## Notes
+
+On the Raspberry Pi I added a USB WIFI dongle.  this gives:
+```
+	wlan0	camera
+	wlan1	my router for ssh in
+```
+
+If the connections are reversed the camera module could not discover the camera.  Might have to add an option to indicate which wlan is connected to the camera.
+
+## Dependencies
+
+```
+Python 3.7.3 on Raspberry Pi is what I am currently using
+
+	petabite/libsonyapi		wrapper for the Sony camera API
+	netifaces				pip install netifaces - to determine the connected ethernet interfaces
+	
+On the camera:
+
+	Smart Remote Control	Playmemories Camera App - sadly it only supports a WIFI connection.
+```
+	
