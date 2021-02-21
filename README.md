@@ -24,20 +24,37 @@ Currently using python 3.7.3
 
 ## Usage
 ```
-python timelapse.py [-h] [--fps FPS] interval [duration]
+python timelapse.py --help
+usage: timelapse.py [--help] {shoot,check_camera} ...
 
 Camera control program for creating time lapse photos.
 
 positional arguments:
-  interval    time between photos in [[hh:]mm:]ss
-  duration    time for movie to run in seconds (default: 20)
+  {shoot,check_camera}
+    shoot               Start shooting sequence. Use timelapse.py shoot --help
+                        to see valid arguments.
+    check_camera        Check the connection to the camera and verify the API
+                        commands needed are supported.
 
 optional arguments:
-  -h, --help  show this help message and exit
-  --fps FPS   frames per second (default: 24)
+  --help                help for help
 
 The number of photos to take will be the frames per second times the duration
 in seconds. For example: 24 FPS for 20 seconds will take 240 photos.
+
+Subcommand: shoot
+usage: timelapse.py shoot [--fps FPS] interval [duration]
+
+positional arguments:
+  interval   time between photos in [[hh:]mm:]ss
+  duration   time for movie to run in seconds (default: 20)
+
+optional arguments:
+  --fps FPS  frames per second (default: 24)
+
+Subcommand: check_camera
+usage: timelapse.py check_camera
+
 ```
 ## Notes
 

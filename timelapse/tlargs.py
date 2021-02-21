@@ -87,17 +87,20 @@ class TimelapseArgs(object):
 		self.shoot = False
 	
 		self.parser = argparse.ArgumentParser(
-			add_help = False,
 			description = "Camera control program for creating time lapse photos.",
 			epilog= "The number of photos to take will be the frames per second"+
 					" times the duration in seconds."+
-					" For example: 24 FPS for 20 seconds will take 240 photos."
+					" For example: 24 FPS for 20 seconds will take 240 photos.",
+			add_help = False
 		)
 		
 		self.parser.add_argument('--help', action=self._HelpAction, help="help for help")
 
 		subparsers = self.parser.add_subparsers()
-		parser_shoot = subparsers.add_parser('shoot', help="Start shooting sequence.  Use %(prog)s shoot --help to see valid arguments.")
+		parser_shoot = subparsers.add_parser('shoot',
+			help="Start shooting sequence.  Use %(prog)s shoot --help to see valid arguments.",
+			add_help = False)
+
 		parser_shoot.add_argument(
 			'--fps',
 			default=24,
@@ -117,7 +120,8 @@ class TimelapseArgs(object):
 
 		test_camera = subparsers.add_parser('check_camera',
 			#action='store_true',
-			help="Check the connection to the camera and verify the API commands needed are supported.")
+			help="Check the connection to the camera and verify the API commands needed are supported.",
+			add_help = False)
 		test_camera.set_defaults(check_camera=True)
 			
 	
