@@ -83,8 +83,8 @@ class TimelapseArgs(object):
 		
 	def __init__(self):
 		
-		self.check_camera = False
-		self.shoot = False
+		self.check_camera_flag = False
+		self.shoot_flag = False
 	
 		self.parser = argparse.ArgumentParser(
 			description = "Camera control program for creating time lapse photos.",
@@ -116,13 +116,13 @@ class TimelapseArgs(object):
 			default=20,	# 20 seconds
 			type=int,
 			help="time for movie to run in seconds (default: %(default)s)")
-		parser_shoot.set_defaults(shoot=True)
+		parser_shoot.set_defaults(shoot_flag=True)
 
 		test_camera = subparsers.add_parser('check_camera',
 			#action='store_true',
 			help="Check the connection to the camera and verify the API commands needed are supported.",
 			add_help = False)
-		test_camera.set_defaults(check_camera=True)
+		test_camera.set_defaults(check_camera_flag=True)
 			
 	
 	def parse_args(self):
