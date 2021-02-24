@@ -13,6 +13,7 @@
 import tlargs
 from libsonyapi.camera import Camera
 from libsonyapi.actions import Actions
+import time
 import datetime
 
 class Timelapse(object):
@@ -23,7 +24,7 @@ class Timelapse(object):
 		try:
 			self.camera = Camera()  # create camera instance
 			camera_info = self.camera.info()  # get camera camera_info
-			print("Camera info: {}".format(camera_info))
+			#print("Camera info: {}".format(camera_info))
 
 			print("Camera name: {}".format(self.camera.name))  # print name of camera
 			print("API version: {}".format(self.camera.api_version))  # print api version of camera
@@ -34,10 +35,18 @@ class Timelapse(object):
 
 	def timelapse_shoot(self):
 		self.shots_taken = 0
-		while self.shots_taken <= self.total_shots:
+		while self.shots_taken < self.total_shots:
+			# ToDo: check ready status of camera
+			#       print time and picture number
 			self.camera.do(Actions.actTakePicture)
-			time.sleep(interval_in_sec)
 			self.shots_taken += 1
+			remaining_shots = self.total_shots - self.shots_taken
+			remaining_seconds = remaining_shots * self.interval_seconds
+			print("Photo {} / {} - time remaining: {}".format(
+				self.shots_taken,
+				self.total_shots,
+				str(datetime.timedelta(seconds=remaining_seconds))))
+			time.sleep(self.interval_seconds)
 
 	def __init__(self):
 		#
@@ -77,4 +86,14 @@ elif tl.shoot_flag:
 	print("Shoot duration = {}".format(tl.shoot_duration))
 	print("Shoot elapsed time = {}".format(str(datetime.timedelta(seconds=tl.shoot_duration))))
 
+	# make sure we are connected to the camera, otherwise print error and exit.
+	tl.check_camera()
+
+	yes_no = input("Start shoot? [yes]/no]")
+	if yes_no == "no":
+		exit()
+
+	# and away we go
+	tl.timelapse_shoot()
+	
 
