@@ -19,10 +19,15 @@ import datetime
 class Timelapse(object):
 	
 	def check_camera(self):
-		
+
+		if self.interface is not None:
+			print("check_camera:Interface: {}".format(self.interface))
+		else:
+			print("check_camera:Interface is None")
+
 		print("Check camera connection and abilities")
 		try:
-			self.camera = Camera()  # create camera instance
+			self.camera = Camera(self.interface)  # create camera instance
 			camera_info = self.camera.info()  # get camera camera_info
 			#print("Camera info: {}".format(camera_info))
 
@@ -54,10 +59,16 @@ class Timelapse(object):
 		#
 		self.check_camera_flag = False
 		self.shoot_flag = False
+		self.interface = None
 		
 		tl_arg_parser = tlargs.TimelapseArgs()
 		tl_args = tl_arg_parser.parse_args()
-		
+		self.interface = tl_args.interface
+		if self.interface is not None:
+			print("timelapse:Interface: {}".format(self.interface))
+		else:
+			print("Interface is None")
+			
 		if tl_args.check_camera_flag:
 			self.check_camera_flag = True
 		if tl_args.shoot_flag:

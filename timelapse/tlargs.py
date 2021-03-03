@@ -94,7 +94,9 @@ class TimelapseArgs(object):
 			add_help = False
 		)
 		
-		self.parser.add_argument('--help', action=self._HelpAction, help="help for help")
+		self.parser.add_argument('--help', action=self._HelpAction, help="print this help and exit")
+		
+		self.parser.add_argument('--interface', help="Specify interface camera is connected to.  Otherwise first active one is used.")
 
 		subparsers = self.parser.add_subparsers()
 		parser_shoot = subparsers.add_parser('shoot',
@@ -131,4 +133,5 @@ class TimelapseArgs(object):
 		#print("Duration = {}".format(self.duration))
 		#print("interval = {}".format(self.interval))
 		#print("Interval_seconds = {}".format(self.interval_seconds))
+		if self.args.interface is not None: print("Interface: {}".format(self.args.interface))
 		return self
